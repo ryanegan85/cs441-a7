@@ -6,23 +6,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/hallway">
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="58dp"
-        android:text="Back"
-        app:layout_constraintBottom_toTopOf="@+id/healthBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageButton
         android:id="@+id/enemyImageButton"
-        android:layout_width="152dp"
-        android:layout_height="140dp"
+        android:layout_width="130dp"
+        android:layout_height="118dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:scaleType="fitCenter"
@@ -35,48 +22,63 @@
     <ProgressBar
         android:id="@+id/healthBar"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="0dp"
+        android:layout_width="333dp"
         android:layout_height="0dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginLeft="49dp"
-        android:layout_marginEnd="49dp"
-        android:layout_marginRight="49dp"
-        android:layout_marginBottom="531dp"
-        android:progressTint="#fc5203"
+        android:layout_marginBottom="535dp"
         android:maxHeight="5dp"
         android:min="0"
         android:minHeight="5dp"
+        android:progressTint="#fc5203"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/healthTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/timerText" />
 
     <TextView
         android:id="@+id/healthTextView"
-        android:layout_width="116dp"
+        android:layout_width="151dp"
         android:layout_height="0dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginBottom="485dp"
         android:gravity="center"
-        android:textSize="24dp"
-        android:textColor="#FFFFFF"
         android:text="0 / 0"
-        app:layout_constraintBottom_toTopOf="@+id/healthBar"
+        android:textColor="#FFFFFF"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/healthBar" />
 
     <TextView
         android:id="@+id/floorTextView"
-        android:layout_width="178dp"
-        android:layout_height="29dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginBottom="56dp"
         android:gravity="center"
         android:text="Current Floor: 1"
         android:textColor="#FFFFFF"
         android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/healthBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timerText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timerText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="63dp"
+        android:gravity="center"
+        android:text="Timer"
+        android:textColor="#FFFFFF"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/healthBar"
+        app:layout_constraintEnd_toStartOf="@+id/floorTextView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

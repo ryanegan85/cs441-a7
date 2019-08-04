@@ -2,12 +2,15 @@ package edu.binghamton.cs.cs441_a7;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class GameActivity extends AppCompatActivity {
     private Button mBackButton;
@@ -18,6 +21,10 @@ public class GameActivity extends AppCompatActivity {
     private int mMaxHealth;
     private int mCurrentHealth;
     private int mCurrentFloor;
+    private CountDownTimer mTimer;
+    private long mTimeInMilliseconds = 30000;
+    private boolean mTimeRunning = false;
+    private TextView mTimerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
+        /*
         mBackButton = findViewById(R.id.button6);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
                 openMainActivity();
             }
         });
+        */
 
         mEnemyButton = findViewById(R.id.enemyImageButton);
         mEnemyButton.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +64,10 @@ public class GameActivity extends AppCompatActivity {
 
         mFloorText = findViewById(R.id.floorTextView);
         mCurrentFloor = 1;
+
+        mTimerText = findViewById(R.id.timerText);
+
+        startStop();
     }
 
     public void openMainActivity() {
@@ -85,6 +98,49 @@ public class GameActivity extends AppCompatActivity {
     public void advanceFloor() {
         mCurrentFloor++;
         mFloorText.setText("Current Floor: " + mCurrentFloor);
+    }
+
+    public void startStop() {
+        if(mTimeRunning) {
+            stopTimer();
+        } else {
+            startTimer();
+        }
+    }
+
+    public void startTimer() {
+        mTimer = new CountDownTimer(mTimeInMilliseconds, 10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeInMilliseconds = millisUntilFinished;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                mTimerText.setText("GAME OVER!");
+            }
+        }.start();
+
+        mTimeRunning = true;
+    }
+
+    public void stopTimer() {
+        mTimer.cancel();
+        mTimeRunning = false;
+    }
+
+    public void updateTimer() {
+        int seconds = (int) mTimeInMilliseconds / 1000;
+        int hundredthSeconds = (int) mTimeInMilliseconds % 1000 / 10;
+
+        String timeLeft = seconds + ".";
+        if(hundredthSeconds < 10) {
+            timeLeft += "0" + hundredthSeconds;
+        } else {
+            timeLeft += hundredthSeconds;
+        }
+        mTimerText.setText(timeLeft);
     }
 
 }
