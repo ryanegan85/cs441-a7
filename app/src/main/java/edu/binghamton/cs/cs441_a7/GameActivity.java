@@ -25,6 +25,13 @@ public class GameActivity extends AppCompatActivity {
     private long mTimeInMilliseconds = 30000;
     private boolean mTimeRunning = false;
     private TextView mTimerText;
+    private ImageButton mRockButton;
+    private ImageButton mPaperButton;
+    private ImageButton mScissorsButton;
+    private enum DamageType {
+        ROCK, PAPER, SCISSORS;
+    }
+    private DamageType mCurrentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,29 @@ public class GameActivity extends AppCompatActivity {
 
         mTimerText = findViewById(R.id.timerText);
 
+        mRockButton = findViewById(R.id.rockButton);
+        mRockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDamageType(DamageType.ROCK);
+            }
+        });
+        mPaperButton = findViewById(R.id.paperButton);
+        mPaperButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDamageType(DamageType.PAPER);
+            }
+        });
+        mScissorsButton = findViewById(R.id.scissorsButton);
+        mScissorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeDamageType(DamageType.SCISSORS);
+            }
+        });
+
+        mCurrentType = DamageType.ROCK;
         startStop();
     }
 
@@ -143,4 +173,24 @@ public class GameActivity extends AppCompatActivity {
         mTimerText.setText(timeLeft);
     }
 
+    public void changeDamageType(DamageType dmg) {
+        if(dmg == DamageType.ROCK) {
+            mCurrentType = DamageType.ROCK;
+            mRockButton.setBackgroundColor(getResources().getColor(R.color.buttonGreen));
+            mPaperButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
+            mScissorsButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
+        }
+        if(dmg == DamageType.PAPER) {
+            mCurrentType = DamageType.PAPER;
+            mRockButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
+            mPaperButton.setBackgroundColor(getResources().getColor(R.color.buttonGreen));
+            mScissorsButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
+        }
+        if(dmg == DamageType.SCISSORS) {
+            mCurrentType = DamageType.SCISSORS;
+            mRockButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
+            mPaperButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
+            mScissorsButton.setBackgroundColor(getResources().getColor(R.color.buttonGreen));
+        }
+    }
 }
