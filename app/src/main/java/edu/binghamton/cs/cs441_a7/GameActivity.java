@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private Button mBackButton;
@@ -32,6 +35,9 @@ public class GameActivity extends AppCompatActivity {
         ROCK, PAPER, SCISSORS;
     }
     private DamageType mCurrentType;
+    private DamageType mEnemyType;
+    private ImageView mEnemyTypeImage;
+    Random randomGen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +66,8 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mMaxHealth = 10;
-        mCurrentHealth = 10;
+        mMaxHealth = 25;
+        mCurrentHealth = 25;
         mHealthBar = findViewById(R.id.healthBar);
         mHealthBar.setMax(mCurrentHealth);
         mHealthBar.setProgress(mCurrentHealth);
@@ -96,7 +102,11 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        mEnemyTypeImage = findViewById(R.id.enemyTypeImage);
+
         mCurrentType = DamageType.ROCK;
+        randomGen = new Random();
+        rollEnemyType();
         startStop();
     }
 
@@ -106,17 +116,48 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void updateHealthBar() {
-        if(mCurrentHealth > 0) {
-            mCurrentHealth--;
-            mHealthBar.setProgress(mCurrentHealth);
-            if(mCurrentHealth == 0) {
-                mCurrentHealth = mMaxHealth;
-                mHealthBar.setProgress(mCurrentHealth);
-                advanceFloor();
+        if(mEnemyType == DamageType.ROCK) {
+            if(mCurrentType == DamageType.ROCK) {
+                mCurrentHealth -= 1;
             }
-        } else {
+            if(mCurrentType == DamageType.PAPER) {
+                mCurrentHealth -= 3;
+            }
+            if(mCurrentType == DamageType.SCISSORS) {
 
+            }
         }
+        if(mEnemyType == DamageType.PAPER) {
+            if(mCurrentType == DamageType.ROCK) {
+
+            }
+            if(mCurrentType == DamageType.PAPER) {
+                mCurrentHealth -= 1;
+            }
+            if(mCurrentType == DamageType.SCISSORS) {
+                mCurrentHealth -= 3;
+            }
+        }
+        if(mEnemyType == DamageType.SCISSORS) {
+            if(mCurrentType == DamageType.ROCK) {
+                mCurrentHealth -= 3;
+            }
+            if(mCurrentType == DamageType.PAPER) {
+
+            }
+            if(mCurrentType == DamageType.SCISSORS) {
+                mCurrentHealth -= 1;
+            }
+        }
+
+        mHealthBar.setProgress(mCurrentHealth);
+        if(mCurrentHealth <= 0) {
+            mCurrentHealth = mMaxHealth;
+            mHealthBar.setProgress(mCurrentHealth);
+            advanceFloor();
+            rollEnemyType();
+        }
+
 
         setHealthText();
     }
@@ -191,6 +232,22 @@ public class GameActivity extends AppCompatActivity {
             mRockButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
             mPaperButton.setBackgroundColor(getResources().getColor(R.color.buttonRed));
             mScissorsButton.setBackgroundColor(getResources().getColor(R.color.buttonGreen));
+        }
+    }
+
+    public void rollEnemyType () {
+        int i = randomGen.nextInt(3);
+        if(i==0) {
+            mEnemyType = DamageType.ROCK;
+            mEnemyTypeImage.setBackgroundResource(R.drawable.rock);
+        }
+        if(i==1) {
+            mEnemyType = DamageType.PAPER;
+            mEnemyTypeImage.setBackgroundResource(R.drawable.paper);
+        }
+        if(i==2) {
+            mEnemyType = DamageType.SCISSORS;
+            mEnemyTypeImage.setBackgroundResource(R.drawable.scissors);
         }
     }
 }

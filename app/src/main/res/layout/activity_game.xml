@@ -167,7 +167,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="Weakness:"
+        android:text="Enemy Type:"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/rockButton"
         app:layout_constraintEnd_toStartOf="@+id/enemyImageButton"
@@ -177,7 +177,7 @@
         app:layout_constraintVertical_bias="0.441" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/enemyTypeImage"
         android:layout_width="65dp"
         android:layout_height="61dp"
         android:layout_marginStart="8dp"
@@ -191,6 +191,5 @@
         app:layout_constraintHorizontal_bias="0.616"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weaknessText"
-        app:layout_constraintVertical_bias="0.018"
-        app:srcCompat="@drawable/rock" />
+        app:layout_constraintVertical_bias="0.018" />
 </android.support.constraint.ConstraintLayout>
