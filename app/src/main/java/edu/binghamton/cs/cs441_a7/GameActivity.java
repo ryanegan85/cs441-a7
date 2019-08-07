@@ -21,11 +21,11 @@ public class GameActivity extends AppCompatActivity {
     private ProgressBar mHealthBar;
     private TextView mHealthText;
     private TextView mFloorText;
-    private int mMaxHealth;
-    private int mCurrentHealth;
+    private double mMaxHealth;
+    private double mCurrentHealth;
     private int mCurrentFloor;
     private CountDownTimer mTimer;
-    private long mTimeInMilliseconds = 30000;
+    private long mTimeInMilliseconds = 10000;
     private boolean mTimeRunning = false;
     private TextView mTimerText;
     private ImageButton mRockButton;
@@ -66,11 +66,11 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        mMaxHealth = 25;
-        mCurrentHealth = 25;
+        mMaxHealth = 10;
+        mCurrentHealth = 10;
         mHealthBar = findViewById(R.id.healthBar);
-        mHealthBar.setMax(mCurrentHealth);
-        mHealthBar.setProgress(mCurrentHealth);
+        mHealthBar.setMax((int) mCurrentHealth);
+        mHealthBar.setProgress((int) mCurrentHealth);
 
         mHealthText = findViewById(R.id.healthTextView);
         setHealthText();
@@ -150,12 +150,15 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        mHealthBar.setProgress(mCurrentHealth);
+        mHealthBar.setProgress((int) mCurrentHealth);
         if(mCurrentHealth <= 0) {
-            mCurrentHealth = mMaxHealth;
-            mHealthBar.setProgress(mCurrentHealth);
+            increaseHealthBar();
             advanceFloor();
             rollEnemyType();
+
+            mTimeInMilliseconds += 2000;
+            stopTimer();
+            startTimer();
         }
 
 
@@ -163,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void setHealthText() {
-        mHealthText.setText(mCurrentHealth + " / " + mMaxHealth);
+        mHealthText.setText((int) mCurrentHealth + " / " + (int) mMaxHealth);
     }
 
     public void advanceFloor() {
@@ -190,6 +193,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 mTimerText.setText("GAME OVER!");
+                goToGameOverActivity();
             }
         }.start();
 
@@ -240,14 +244,30 @@ public class GameActivity extends AppCompatActivity {
         if(i==0) {
             mEnemyType = DamageType.ROCK;
             mEnemyTypeImage.setBackgroundResource(R.drawable.rock);
+            mEnemyButton.setImageResource(R.drawable.enemy_rockmonster);
         }
         if(i==1) {
             mEnemyType = DamageType.PAPER;
             mEnemyTypeImage.setBackgroundResource(R.drawable.paper);
+            mEnemyButton.setImageResource(R.drawable.enemy_elephant);
         }
         if(i==2) {
             mEnemyType = DamageType.SCISSORS;
             mEnemyTypeImage.setBackgroundResource(R.drawable.scissors);
+            mEnemyButton.setImageResource(R.drawable.enemy_gorilla);
         }
+    }
+
+    public void increaseHealthBar() {
+        mMaxHealth = Math.pow(mMaxHealth, 1.05);
+        mCurrentHealth = mMaxHealth;
+        mHealthBar.setMax((int) mCurrentHealth);
+        mHealthBar.setProgress((int) mCurrentHealth);
+    }
+
+    public void goToGameOverActivity() {
+        Intent intent = new Intent(getBaseContext(), GameOverActivity.class);
+        intent.putExtra("SCORE", Integer.toString(mCurrentFloor));
+        startActivity(intent);
     }
 }

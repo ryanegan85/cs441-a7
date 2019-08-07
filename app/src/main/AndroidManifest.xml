@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name="edu.binghamton.cs.cs441_a7.GameOverActivity"></activity>
         <activity android:name="edu.binghamton.cs.cs441_a7.InstructionsActivity"></activity>
         <activity android:name="edu.binghamton.cs.cs441_a7.GameActivity"></activity>
         <activity android:name="edu.binghamton.cs.cs441_a7.HiScoresActivity"></activity>

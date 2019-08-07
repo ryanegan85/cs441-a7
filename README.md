@@ -6,3 +6,5 @@ Sources for images:
 	Scissors Button: https://www.brik.co/blogs/pixel-art/scissors-pixel-art-1
 	Rock: https://www.pixilart.com/art/8-bit-rock-1c9838b31848c91
 	Paper: https://www.stockunlimited.com/similar/1958406.html
+	Gorilla Enemy: http://mystwarriors.com/blog/?p=1566
+	Rockmonster Enemy: https://www.kickstarter.com/projects/dhindes/wildfire-0/posts?lang=it&page=5
