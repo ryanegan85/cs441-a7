@@ -1,12 +1,20 @@
 package edu.binghamton.cs.cs441_a7;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class HiScoresActivity extends AppCompatActivity {
     private Button mBackButton;
@@ -32,8 +40,8 @@ public class HiScoresActivity extends AppCompatActivity {
         });
 
         hiScores = new HiScoreEntry();
-        hiScores.putNewHiScore("Ryan", "23000");
-        hiScores.putNewHiScore("Alex", "2");
+        load();
+        hiScores.sortScores();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.myRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -44,5 +52,19 @@ public class HiScoresActivity extends AppCompatActivity {
     public void openMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+    }
+
+    public void load() {
+        SharedPreferences prefs = getSharedPreferences("SCORES", MODE_PRIVATE);
+        int numScores = prefs.getInt("numScores", 0);
+        String tempName;
+        String tempScore;
+        String currentScoreString;
+        for(int i=1; i<=numScores; i++) {
+            currentScoreString = Integer.toString(i);
+            tempName = prefs.getString("NAME_" + currentScoreString, "N/A");
+            tempScore = prefs.getString("SCORE_" + currentScoreString, "N/A");
+            hiScores.putNewHiScore(tempName, tempScore);
+        }
     }
 }
