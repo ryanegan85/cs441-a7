@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,6 +22,8 @@ public class HiScoresActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private HiScoreEntry hiScores;
+    private Button mEraseScores;
+    private TextView mEraseConfirmation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,23 @@ public class HiScoresActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter(this, hiScores);
         mRecyclerView.setAdapter(mAdapter);
+
+        mEraseConfirmation = findViewById(R.id.textView2);
+
+        mEraseScores = findViewById(R.id.button8);
+        mEraseScores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hiScores = new HiScoreEntry();
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.setAdapter(mAdapter);
+
+                SharedPreferences.Editor editor = getSharedPreferences("SCORES", MODE_PRIVATE).edit();
+                editor.clear();
+                editor.commit();
+                mEraseConfirmation.setText("Scores cleared! Go back to menu to refresh.");
+            }
+        });
     }
 
     public void openMainActivity() {
